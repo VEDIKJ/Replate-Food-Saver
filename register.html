@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Account - Replate</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+  <a class="logo" href="index.html">replate</a>
+  <div class="box">
+    <h1>Create Your Account</h1>
+    <p class="subtitle">Join Replate as a customer or a restaurant</p>
+
+    <form id="registerForm" novalidate>
+      <label for="fullName">Full Name</label>
+      <input type="text" id="fullName" placeholder="e.g. Asha Sharma" autocomplete="name">
+
+      <label for="email">Email Address</label>
+      <input type="email" id="email" placeholder="you@example.com" autocomplete="email">
+
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" placeholder="e.g. 9876543210" autocomplete="tel">
+
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="At least 6 characters" autocomplete="new-password">
+
+      <label for="confirmPassword">Confirm Password</label>
+      <input type="password" id="confirmPassword" placeholder="Re-enter your password" autocomplete="new-password">
+
+      <label for="role">Account Type</label>
+      <select id="role">
+        <option value="CUSTOMER">Customer</option>
+        <option value="RESTAURANT">Restaurant</option>
+      </select>
+
+      <!-- Shown only when "Restaurant" is selected. -->
+      <div id="restaurantFields" style="display:none;">
+        <label for="restaurantName">Restaurant Name</label>
+        <input type="text" id="restaurantName" placeholder="e.g. The Little Cafe">
+
+        <label for="address">Restaurant Address</label>
+        <input type="text" id="address" placeholder="e.g. 12 MG Road, Bengaluru">
+      </div>
+
+      <button type="submit" id="registerBtn">Create Account</button>
+    </form>
+
+    <p id="message" class="form-msg" style="display:none;"></p>
+
+    <p>Already have an account? <a href="login.html">Log in here</a></p>
+  </div>
+
+  <script>
+    const form = document.getElementById('registerForm');
+    const roleSelect = document.getElementById('role');
+    const restaurantFields = document.getElementById('restaurantFields');
+    const messageBox = document.getElementById('message');
+    const registerBtn = document.getElementById('registerBtn');
+
+    // Show the restaurant-only fields when "Restaurant" is picked.
+    roleSelect.addEventListener('change', function () {
+      restaurantFields.style.display = this.value === 'RESTAURANT' ? 'block' : 'none';
+    });
+
+    function showMessage(text, type) {
+      messageBox.textContent = text;
+      messageBox.className = 'form-msg ' + (type === 'good' ? 'good' : 'bad');
+      messageBox.style.display = 'block';
+    }
+
+    function isValidEmail(email) {
+      return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
+    }
+
+    form.addEventListener('submit', async function (event) {
+      event.preventDefault();
+      messageBox.style.display = 'none';
+
+      const fullName = document.getElementById('fullName').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      const role = roleSelect.value;
+      const restaurantName = document.getElementById('restaurantName').value.trim();
+      const address = document.getElementById('address').value.trim();
+
+      // Client-side validation (the server validates again).
+      if (!fullName) { showMessage('Please enter your full name.', 'bad'); return; }
+      if (!isValidEmail(email)) { showMessage('Please enter a valid email address.', 'bad'); return; }
+      if (!/^[0-9+\-\s]{7,20}$/.test(phone)) { showMessage('Please enter a valid phone number.', 'bad'); return; }
+      if (password.length < 6) { showMessage('Password must be at least 6 characters.', 'bad'); return; }
+      if (password !== confirmPassword) { showMessage('Passwords do not match.', 'bad'); return; }
+      if (role === 'RESTAURANT') {
+        if (!restaurantName) { showMessage('Please enter your restaurant name.', 'bad'); return; }
+        if (!address) { showMessage('Please enter your restaurant address.', 'bad'); return; }
+      }
+
+      registerBtn.disabled = true;
+      registerBtn.textContent = 'Creating account…';
+
+      try {
+        const response = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            fullName, email, phone, password, confirmPassword, role,
+            restaurantName, address
+          })
+        });
+        const data = await response.json();
+
+        if (!response.ok) {
+          showMessage(data.error || 'Could not create the account.', 'bad');
+          registerBtn.disabled = false;
+          registerBtn.textContent = 'Create Account';
+          return;
+        }
+
+        showMessage('Account created! Redirecting to login…', 'good');
+        setTimeout(() => { window.location.href = 'login.html'; }, 1200);
+      } catch (e) {
+        showMessage('Could not reach the server. Is it running?', 'bad');
+        registerBtn.disabled = false;
+        registerBtn.textContent = 'Create Account';
+      }
+    });
+  </script>
+</body>
+</html>

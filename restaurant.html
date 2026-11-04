@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant Dashboard · Replate</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="app.css">
+  <!-- QR scanner library for verifying pickup codes with the camera. -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+</head>
+<body>
+  <!-- ============ HEADER ============ -->
+  <header>
+    <a class="logo" href="index.html">replate</a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="restaurant.html">Restaurant</a>
+    </nav>
+    <span class="user-greeting" id="userGreeting"></span>
+    <a class="login" href="#" id="logoutBtn">Log out</a>
+  </header>
+
+  <main class="page">
+    <!-- ============ PAGE INTRO ============ -->
+    <div class="page-intro">
+      <p class="label">Restaurant Dashboard</p>
+      <h1>Manage your food &amp; orders</h1>
+      <p>Add items to your menu, accept or reject orders, pack them and verify pickups.</p>
+    </div>
+
+    <!-- ============ ADD FOOD ITEM ============ -->
+    <section class="panel">
+      <h2>Add food item</h2>
+      <div class="form-row">
+        <div class="field">
+          <label for="foodName">Food Item Name</label>
+          <input type="text" id="foodName" placeholder="e.g. Paneer Sandwich">
+        </div>
+        <div class="field">
+          <label for="foodPrice">Price (₹)</label>
+          <input type="number" id="foodPrice" placeholder="e.g. 90" min="1">
+        </div>
+        <div class="field">
+          <label for="foodQuantity">Quantity available</label>
+          <input type="number" id="foodQuantity" placeholder="e.g. 10" min="0" step="1">
+        </div>
+        <div class="field">
+          <label for="foodCategory">Category</label>
+          <select id="foodCategory">
+            <option value="Meals">Meals</option>
+            <option value="Snacks">Snacks</option>
+            <option value="Desserts">Desserts</option>
+            <option value="Beverages">Beverages</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="foodDesc">Description (optional)</label>
+          <input type="text" id="foodDesc" placeholder="e.g. Fresh and tasty">
+        </div>
+        <div class="field-file">
+          <label for="foodImage">Image (optional)</label>
+          <input type="file" id="foodImage" accept="image/*">
+        </div>
+        <button id="addItemBtn" class="btn">Add Item</button>
+      </div>
+      <p id="addMessage" class="message" style="display:none;"></p>
+    </section>
+
+    <!-- ============ YOUR MENU ============ -->
+    <section class="panel">
+      <h2>Your menu</h2>
+      <div id="menu" class="rest-menu-grid">
+        <p class="empty-note">Loading…</p>
+      </div>
+    </section>
+
+    <!-- ============ ORDERS ============ -->
+    <section class="panel">
+      <h2>Orders</h2>
+      <div id="orders">
+        <p class="empty-note">No orders yet.</p>
+      </div>
+    </section>
+
+    <!-- ============ VERIFY PICKUP ============ -->
+    <section class="panel">
+      <h2>Verify pickup</h2>
+      <p style="color:var(--muted); margin:0 0 18px; font-size:14px;">When the customer arrives, scan their QR code or type their pickup code.</p>
+
+      <div class="verify-layout">
+        <div class="verify-section">
+          <h3 class="sub">Scan QR</h3>
+          <div id="reader"></div>
+          <button id="scanBtn" class="btn btn-outline btn-small">Start camera scan</button>
+        </div>
+
+        <div class="verify-divider">OR</div>
+
+        <div class="verify-section">
+          <h3 class="sub">Enter pickup code</h3>
+          <div class="form-row">
+            <div class="field">
+              <label for="pickupCode">Pickup Code</label>
+              <input type="text" id="pickupCode" placeholder="e.g. FS-1024-X7K9">
+            </div>
+            <button id="verifyBtn" class="btn">Verify Code</button>
+          </div>
+        </div>
+      </div>
+
+      <p id="verifyResult" class="verify-result" style="display:none;"></p>
+    </section>
+  </main>
+
+  <!-- ============ EDIT FOOD MODAL ============ -->
+  <div class="modal-overlay" id="editModal" role="dialog" aria-modal="true" aria-labelledby="editModalTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="editModalTitle">Edit Food Item</h2>
+        <button class="modal-close" id="editModalClose" aria-label="Close">&times;</button>
+      </div>
+
+      <!-- Image preview -->
+      <div class="field-file" style="margin-bottom:16px;">
+        <label>Food Image</label>
+        <div class="img-preview" id="editImgPreview">
+          <div class="thumb-placeholder">🍽</div>
+        </div>
+        <input type="file" id="editImage" accept="image/*">
+        <small style="color:var(--muted); margin-top:4px;">Leave empty to keep current image</small>
+      </div>
+
+      <!-- Name -->
+      <div class="field">
+        <label for="editName">Food Item Name</label>
+        <input type="text" id="editName" placeholder="e.g. Paneer Sandwich">
+      </div>
+
+      <!-- Price -->
+      <div class="field">
+        <label for="editPrice">Price (₹)</label>
+        <input type="number" id="editPrice" placeholder="e.g. 90" min="1">
+      </div>
+
+      <div class="field">
+        <label for="editQuantity">Quantity available</label>
+        <input type="number" id="editQuantity" placeholder="e.g. 10" min="0" step="1">
+      </div>
+
+      <!-- Description -->
+      <div class="field">
+        <label for="editDesc">Description (optional)</label>
+        <textarea id="editDesc" placeholder="e.g. Fresh paneer, veggies and special sauce."></textarea>
+      </div>
+
+      <!-- Category -->
+      <div class="field">
+        <label for="editCategory">Category</label>
+        <select id="editCategory">
+          <option value="Meals">Meals</option>
+          <option value="Snacks">Snacks</option>
+          <option value="Desserts">Desserts</option>
+          <option value="Beverages">Beverages</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <!-- Availability toggle -->
+      <div class="checkbox-field">
+        <input type="checkbox" id="editAvailable" checked>
+        <label for="editAvailable">Show this item to customers</label>
+      </div>
+
+      <p id="editMessage" class="message" style="display:none;"></p>
+
+      <div class="modal-footer">
+        <button class="btn btn-outline" id="editCancelBtn">Cancel</button>
+        <button class="btn" id="editSaveBtn">Update Item</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span class="logo">replate</span>
+    <p>Less waste. More good food.</p>
+    <small>© 2026 Replate</small>
+  </footer>
+
+  <script src="restaurant.js"></script>
+</body>
+</html>

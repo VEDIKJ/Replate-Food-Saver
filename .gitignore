@@ -1,0 +1,33 @@
+
+# Database credentials
+db.properties
+.env
+.env.*
+
+# Allow example environment files
+!.env.example
+
+# Compiled Java files
+out/
+*.class
+
+# Uploaded user data
+uploads/food/*
+!uploads/food/.gitkeep
+
+# Database backups and local data
+replate_db_backup.sql
+
+# IDE files
+.vscode/
+.idea/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+
+sources.txt

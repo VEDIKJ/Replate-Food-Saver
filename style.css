@@ -1,0 +1,227 @@
+body {
+  margin: 0;
+  color: #203b2d;
+  background: #fffdf9;
+  font-family: Arial, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+header {
+  width: 1100px;
+  height: 80px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+}
+
+.logo {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+nav {
+  display: flex;
+  gap: 34px;
+  color: #59675d;
+}
+
+.login {
+  color: #285943;
+  font-weight: bold;
+}
+
+.label {
+  margin: 0 0 12px;
+  color: #6d8d59;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.intro {
+  width: 1040px;
+  margin: 35px auto 18px;
+  padding: 45px 50px 40px;
+  text-align: center;
+  background: #f4f6e9;
+  border-radius: 10px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: Georgia, serif;
+  font-weight: normal;
+}
+
+h1 {
+  margin: 0 auto 15px;
+  font-size: 58px;
+  line-height: 1.05;
+}
+
+h1 span {
+  color: #6a9957;
+}
+
+.intro>p:last-child {
+  color: #6d786f;
+}
+
+.content {
+  width: 1040px;
+  margin: 55px auto 0;
+}
+
+.heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.heading h2 {
+  margin: 0;
+}
+
+.heading>p {
+  width: 330px;
+  color: #6d786f;
+  line-height: 1.5;
+}
+
+h2 {
+  margin: 0 0 32px;
+  font-size: 40px;
+}
+
+.meals {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.card {
+  overflow: hidden;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 3px 14px #203b2d1a;
+}
+
+.card img {
+  display: block;
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.card div {
+  padding: 18px;
+}
+
+.card p {
+  margin: 0 0 10px;
+  color: #71866e;
+  font-size: 12px;
+}
+
+.card h3 {
+  margin: 0 0 10px;
+  font-size: 21px;
+}
+
+.card small {
+  display: block;
+  margin-bottom: 18px;
+  color: #6d786f;
+}
+
+.card strong {
+  font-size: 16px;
+}
+
+.card del {
+  margin-left: 5px;
+  color: #9aa59b;
+  font-size: 12px;
+}
+
+.card b {
+  float: right;
+  color: #6b9256;
+  font-size: 12px;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.steps span {
+  color: #81a46d;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.steps h3 {
+  margin: 28px 0 10px;
+  font-size: 22px;
+}
+
+.steps p {
+  color: #6d786f;
+  line-height: 1.5;
+}
+
+.restaurant {
+  width: 950px;
+  margin: 80px auto;
+  padding: 40px;
+  display: flex;
+  gap: 35px;
+  align-items: center;
+  background: #e3edd8;
+  border-radius: 8px;
+}
+
+.restaurant h2 {
+  width: 330px;
+  margin: 0;
+  font-size: 30px;
+}
+
+.restaurant p:not(.label) {
+  width: 330px;
+  color: #66766b;
+  line-height: 1.5;
+}
+
+.restaurant a {
+  color: #285943;
+  font-weight: bold;
+}
+
+footer {
+  padding: 28px 5%;
+  display: flex;
+  gap: 25px;
+  color: white;
+  background: #203b2d;
+}
+
+footer .logo {
+  margin-right: auto;
+}
+
+footer p,
+footer small {
+  color: #bed0c0;
+}

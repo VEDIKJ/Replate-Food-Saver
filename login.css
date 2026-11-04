@@ -1,0 +1,109 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fffdf9;
+  font-family: Arial, sans-serif;
+}
+.logo {
+  position: fixed;
+  top: 28px;
+  left: 34px;
+  font-size: 25px;
+  font-weight: bold;
+  color: #203b2d;
+  text-decoration: none;
+}
+.box {
+  width: 100%;
+  max-width: 520px;
+  padding: 16px;
+  text-align: center;
+}
+.box h1 {
+  font-family: Georgia, serif;
+  font-weight: bold;
+  color: #203b2d;
+  margin: 0 0 8px;
+}
+.box .subtitle {
+  color: #6d8d59;
+  margin: 0 0 24px;
+}
+form {
+  background: white;
+  border: none;
+  border-radius: 16px;
+  padding: 40px;
+  text-align: left;
+  box-shadow: 0 4px 24px rgba(32, 59, 45, 0.08);
+}
+form label {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  color: #203b2d;
+  margin: 10px 0 2px;
+}
+input,
+select,
+button {
+  width: 100%;
+  height: 50px;
+  padding: 0 15px;
+  margin: 6px 0 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  background: white;
+}
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #285943;
+  box-shadow: 0 0 0 3px rgba(40, 89, 67, 0.12);
+}
+button {
+  background: #285943;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 16px;
+  font-weight: bold;
+}
+button:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+a {
+  color: #285943;
+}
+/* Validation / status messages for login + register. */
+.form-msg {
+  text-align: center;
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin: 14px 0 0;
+  font-size: 14px;
+}
+.form-msg.bad {
+  color: #8a1f1f;
+  background: #fdecec;
+  border: 1px solid #f3c2c2;
+}
+.form-msg.good {
+  color: #1e5631;
+  background: #e8f5ea;
+  border: 1px solid #b7e0bf;
+}
+/* Kept for backward compatibility with the old #error id. */
+#error {
+  color: #8a1f1f;
+  text-align: center;
+}

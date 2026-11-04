@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Dashboard · Replate</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="app.css">
+  <!-- QR code generator for pickup codes -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+  <!-- ============ HEADER ============ -->
+  <header>
+    <a class="logo" href="index.html">replate</a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="customer.html">Customer</a>
+    </nav>
+    <span class="user-greeting" id="userGreeting"></span>
+    <a class="login" href="#" id="logoutBtn">Log out</a>
+  </header>
+
+  <main class="page">
+    <!-- ============ HERO BANNER ============ -->
+    <div class="hero-banner">
+      <div class="hero-text">
+        <h1>Good Food<span>Better Tomorrow</span></h1>
+        <p>Save surplus food from local restaurants at discounted prices and help reduce food waste.</p>
+      </div>
+    </div>
+
+    <!-- ============ TWO-COLUMN LAYOUT ============ -->
+    <div class="page-grid">
+
+      <!-- LEFT: food listing -->
+      <div class="main-content">
+
+        <!-- Search + Sort -->
+        <div class="search-bar">
+          <input type="text" id="searchInput" placeholder="Search for food…" aria-label="Search food items">
+          <select class="sort-select" id="sortSelect" aria-label="Sort food items">
+            <option value="default">Sort by</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="name">Name: A–Z</option>
+          </select>
+        </div>
+
+        <!-- Category filters -->
+        <div class="category-filters" id="categoryFilters">
+          <button class="category-btn active" data-category="all">All</button>
+          <button class="category-btn" data-category="meals">🍱 Meals</button>
+          <button class="category-btn" data-category="snacks">🥪 Snacks</button>
+          <button class="category-btn" data-category="desserts">🍰 Desserts</button>
+          <button class="category-btn" data-category="beverages">☕ Beverages</button>
+          <button class="category-btn" data-category="other">🍴 Other</button>
+        </div>
+
+        <!-- Section heading -->
+        <div class="section-heading">
+          <h2>Available Food</h2>
+        </div>
+
+        <!-- Food card grid (populated by JS) -->
+        <div id="menu" class="menu-grid">
+          <p class="empty-note">Loading food items…</p>
+        </div>
+      </div>
+
+      <!-- RIGHT: cart sidebar -->
+      <div class="cart-panel panel" id="cartPanel">
+        <div class="cart-header">
+          <h2>Your Cart (<span id="cartCount">0</span>)</h2>
+          <button class="cart-clear-btn" id="clearCartBtn" title="Clear cart">🗑 Clear</button>
+        </div>
+
+        <!-- Cart items list (populated by JS) -->
+        <div id="cart">
+          <p class="empty-note">Your cart is empty.</p>
+        </div>
+
+        <!-- Cart summary -->
+        <div class="cart-summary" id="cartSummary" style="display:none;">
+          <div class="cart-summary-row">
+            <span>Total Items</span>
+            <span id="cartItemCount">0</span>
+          </div>
+          <div class="cart-summary-row total">
+            <span>Total Amount</span>
+            <span id="cartTotal">₹0</span>
+          </div>
+          <button id="placeOrderBtn" class="btn btn-full">Place Order →</button>
+        </div>
+
+        <p id="cartMessage" class="message" style="display:none;"></p>
+      </div>
+    </div>
+
+    <!-- ============ MY ORDERS ============ -->
+    <section class="panel" style="margin-top: 8px;">
+      <h2>My Orders</h2>
+      <div id="orders">
+        <p class="empty-note">You have not placed any orders yet.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span class="logo">replate</span>
+    <p>Less waste. More good food.</p>
+    <small>© 2026 Replate</small>
+  </footer>
+
+  <script src="customer.js"></script>
+</body>
+</html>
